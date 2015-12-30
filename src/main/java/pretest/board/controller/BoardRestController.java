@@ -1,37 +1,72 @@
 package pretest.board.controller;
 
+import java.util.Date;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import pretest.board.model.Document;
 import pretest.board.service.BoardService;
+import pretest.utils.DocumentValidator;
 
 import com.google.common.collect.Maps;
 
 /**
- * 2015. 12. 28.
- * Copyright by joyhan / HUFS
- * BoardRestController
- * Rest¿ë ÄÁÆ®·Ñ·¯¸¦ º°µµ·Î ºÐ¸® ½ÃÅ´.
+ * 2015. 12. 28. Copyright by joyhan / HUFS BoardRestController Restï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¸ï¿½ ï¿½ï¿½Å´.
  */
 @RestController
 @RequestMapping(value = "/boards")
 public class BoardRestController {
-	
+
 	@Autowired
 	BoardService boardService;
-	
+
+	@Autowired
+	DocumentValidator documentValidator;
+
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(documentValidator);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
+	public View insertDocument(
+			@ModelAttribute @Valid Document document, BindingResult result) {
+		document.setRegDate(new Date());
+		document.setModDate(new Date());
+		
+		boardService.insertDocument(document);
+
+		return new RedirectView("/board");
+	}
+
+	@RequestMapping(value = "/{idx}", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> insertDocument(Document document)	{
+	public Map<String, Object> getDocument(@PathVariable("idx") int idx) {
 		Map<String, Object> resultMap = Maps.newHashMap();
-		
-		
+		Document document = boardService.getDocument(idx);
+		resultMap.put("document", document);
 		return resultMap;
+	}
+	
+	@RequestMapping(value="/{idx}" ,method = RequestMethod.POST)
+	public View updateDocument(@ModelAttribute Document document, @PathVariable("idx")int idx)	{
+		document.setModDate(new Date());
+		boardService.updateDocuemnt(document);
+		return new RedirectView("/board");
 	}
 }

@@ -1,5 +1,6 @@
 package pretest.board.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -15,7 +16,6 @@ public class Document {
 	
 	private Date regDate;
 	private Date modDate;
-	
 	
 	public int getIdx() {
 		return idx;

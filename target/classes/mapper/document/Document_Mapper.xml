@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="document">
+  
+    <select id="selectDocument" parameterType="Document" resultType="Document">
+            SELECT
+                idx,
+                email,
+                password,
+                content,
+                reg_date as regDate,
+                mod_date as modDate
+            FROM
+                document
+            WHERE
+                idx = #{idx}
+    </select>
+    
+    <select id="selectDocumentList" resultType="Document">
+            SELECT
+                idx,
+                email,
+                password,
+                content,
+                reg_date as regDate,
+                mod_date as modDate
+            FROM
+                document
+            ORDER BY modDate DESC
+    </select>
+    
+    <insert id="insertDocument" parameterType="Document">
+    	INSERT INTO
+    		document(
+    			email,
+    			password,
+    			content,
+    			reg_date,
+    			mod_date
+    		)
+    	VALUES
+    		(
+    		#{email},
+    		#{password},
+    		#{content},
+    		#{regDate},
+    		#{modDate}
+    		)
+    </insert>
+    
+    <delete id="deleteDocument" parameterType="Integer">
+    	DELETE FROM
+    		document
+    	WHERE idx = #{documentId}
+    </delete>
+
+    <update id="updateDocument" parameterType="Document">
+    		UPDATE document
+    		SET content = #{content},
+    		mod_date = #{modDate}
+    		WHERE idx = #{idx}
+    </update>
+     
+</mapper>

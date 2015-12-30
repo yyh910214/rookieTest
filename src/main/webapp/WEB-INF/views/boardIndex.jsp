@@ -1,68 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!DOCTYPE html>
+<html>
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>Login</title>
-
-
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	<title>Guest Board</title>
 </head>
-
 <body>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="container" id="loginContainer">
-				<form class="form" role="form" method="post" action="login"
-					accept-charset="UTF-8" id="login-nav">
-					<div class="form-group">
-						<label class="sr-only" for="exampleInputEmail2">Email
-							address</label> <input type="email" class="form-control"
-							id="exampleInputEmail2" placeholder="Email address" required>
-					</div>
-					<div class="form-group">
-						<label class="sr-only" for="exampleInputPassword2">Password</label>
-						<input type="password" class="form-control"
-							id="exampleInputPassword2" placeholder="Password" required>
-						<div class="help-block text-right">
-							<a href="">비밀번호 찾기</a>
-						</div>
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block">Sign
-							in</button>
-					</div>
-					<div class="checkbox">
-						<label> <input type="checkbox"> keep me logged-in
-						</label>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="containerR">
-				<div class="neuRegi">
-					<button type="submit" id="registrationBtn" class="btn btn-primary btn-block">Registration</button>
-					<script type="text/javascript">
-						var url="/udong/test/registration";
-						document.getElementById("registrationBtn").onclick = function () {
-					        location.href = url;
-					    };
-					</script>
-					
-					
-				</div>
-			</div>
-		</div>
-	</div>
+<h2 class="text-center">Guest Board <small>NHN ent. pretest</small></h2>
 
+<div class="container">
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/board/insert" role="button">삽입</a>
+	<table class="table table-striped">
+		<th>
+			<td>email</td>
+			<td style="width :60%">content</td>
+			<td>modDate</td>
+			<td>Modify</td>
+		</th>
+		<c:forEach items="${documentList }" var="document">
+			<tr>
+				<td>${document.idx }</td>
+				<td>${document.email }</td>
+				<td>${document.content }</td>
+				<td>${document.modDate }</td>
+				<td><a class="btn btn-default" href="${pageContext.request.contextPath}/board/update/${document.idx }" role="button">Link</a></td>
+			</tr>
+		</c:forEach>
+	</table>
+</div>
 </body>
-
 </html>

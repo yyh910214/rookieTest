@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import pretest.board.model.Document;
 import pretest.board.service.BoardService;
+import pretest.configuration.MybatisProperty;
 
 /**
  * 2015. 12. 28.
@@ -24,22 +26,28 @@ public class BoardContoller {
 	@Autowired
 	BoardService boardService;
 	
+	@Autowired
+	MybatisProperty mybatisProperty;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(Model model)	{
 		List<Document> documentList = boardService.getDocumentList();
 		model.addAttribute("documentList", documentList);
+		System.out.println(documentList.get(documentList.size()-1).getContent());
 		return "boardIndex";
 	}
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(Model model)	{
-		return "updateDocument";
+		Document document = new Document();
+		model.addAttribute(document);
+		return "documentInsert";
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(int documentId, Model model)	{
 		Document document = boardService.getDocument(documentId);
 		model.addAttribute("document", document);
-		return "updateDocument";
+		return "documentInsert";
 	}
 }
