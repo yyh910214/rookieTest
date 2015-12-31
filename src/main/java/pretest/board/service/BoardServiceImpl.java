@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService	{
 
 	public int updateDocuemnt(Document document) {
 		Document originalDocument = getDocument(document.getIdx());
-		if(originalDocument.getPassword() != document.getPassword())	{
+		if(!originalDocument.getPassword().equals(document.getPassword()))	{
 			return -1;	// password wrong
 		}
 		int updatedRow = commonDAO.update("document.updateDocument", document); 

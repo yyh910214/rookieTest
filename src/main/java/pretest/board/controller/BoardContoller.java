@@ -46,6 +46,7 @@ public class BoardContoller {
 	@RequestMapping(value = "/update/{idx}", method = RequestMethod.GET)
 	public String update(@PathVariable("idx")int documentId, Model model)	{
 		Document document = boardService.getDocument(documentId);
+		document.setPassword("");
 		model.addAttribute("document", document);
 		return "documentInsert";
 	}

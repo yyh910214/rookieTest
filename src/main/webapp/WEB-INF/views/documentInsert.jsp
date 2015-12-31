@@ -14,19 +14,33 @@
 <title>Insert Document</title>
 </head>
 <body>
+
+	
+	<c:if test="${!empty document.email}">
+		<c:set var="targetURL" value="${pageContext.request.contextPath}/boards/${document.idx }"/>
+	</c:if>
+	<c:if test="${empty document.email }">
+		<c:set var="targetURL" value="${pageContext.request.contextPath}/boards"/>
+	</c:if>
+	
+
 	<h2 class="text-center">
 		Guest Board 입력<small>NHN ent. pretest</small>
 	</h2>
 	<div class="container-fluid">
-		<%-- 		<c:if test="${!empty document.idx}"> --%>
 		<form:form modelAttribute="document"
-			action="${pageContext.request.contextPath}/boards" method="post"
+			action="${targetURL}" method="post"
 			onSubmit="return validateForm();">
 			<table style="width: 80%">
 
 				<tr>
 					<td><form:label path="email">Email</form:label></td>
-					<td><form:input path="email" required="true"></form:input><form:errors path="email" /></td>
+					<c:if test="${!empty document.email}">
+					<td><form:input path="email" required readonly></form:input><form:errors path="email" /></td>
+					</c:if>
+					<c:if test="${empty document.email }">
+					<td><form:input path="email" required></form:input><form:errors path="email" /></td>
+					</c:if>
 				</tr>
 
 				<tr>
