@@ -36,14 +36,14 @@ public class BoardRestController {
 	public ModelAndView insertDocument(
 			@ModelAttribute @Valid Document document, BindingResult result) {
 		if(result.hasErrors())	{
-			return new ModelAndView("/documentInsert");
+			return new ModelAndView("documentInsert");
 		}
 		document.setRegDate(new Date());
 		document.setModDate(new Date());
 		
 		boardService.insertDocument(document);
 
-		return new ModelAndView(new RedirectView("/board"));
+		return new ModelAndView(new RedirectView("board"));
 	}
 
 	@RequestMapping(value = "/{idx}", method = RequestMethod.GET)

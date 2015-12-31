@@ -17,7 +17,7 @@
 
 	
 	<c:if test="${!empty document.email}">
-		<c:set var="targetURL" value="${pageContext.request.contextPath}/boards/${document.idx }"/>
+		<c:set var="targetURL" value="${pageContext.request.contextPath}/boards/${document.idx}"/>
 	</c:if>
 	<c:if test="${empty document.email }">
 		<c:set var="targetURL" value="${pageContext.request.contextPath}/boards"/>
@@ -36,10 +36,10 @@
 				<tr>
 					<td><form:label path="email">Email</form:label></td>
 					<c:if test="${!empty document.email}">
-					<td><form:input path="email" required readonly></form:input><form:errors path="email" /></td>
+					<td><form:input path="email" required="true" readonly="true"></form:input><form:errors path="email" /></td>
 					</c:if>
 					<c:if test="${empty document.email }">
-					<td><form:input path="email" required></form:input><form:errors path="email" /></td>
+					<td><form:input path="email" required="true"></form:input><form:errors path="email" /></td>
 					</c:if>
 				</tr>
 
