@@ -7,20 +7,18 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import pretest.board.model.Document;
 import pretest.board.service.BoardService;
-import pretest.utils.DocumentValidator;
 
 import com.google.common.collect.Maps;
 
@@ -31,27 +29,21 @@ import com.google.common.collect.Maps;
 @RestController
 @RequestMapping(value = "/boards")
 public class BoardRestController {
-
 	@Autowired
 	BoardService boardService;
 
-	@Autowired
-	DocumentValidator documentValidator;
-
-	@InitBinder
-	public void initBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(documentValidator);
-	}
-
 	@RequestMapping(method = RequestMethod.POST)
-	public View insertDocument(
+	public ModelAndView insertDocument(
 			@ModelAttribute @Valid Document document, BindingResult result) {
+		if(result.hasErrors())	{
+			return new ModelAndView("/documentInsert");
+		}
 		document.setRegDate(new Date());
 		document.setModDate(new Date());
 		
 		boardService.insertDocument(document);
 
-		return new RedirectView("/board");
+		return new ModelAndView(new RedirectView("/board"));
 	}
 
 	@RequestMapping(value = "/{idx}", method = RequestMethod.GET)

@@ -13,7 +13,7 @@
 <h2 class="text-center">Guest Board <small>NHN ent. pretest</small></h2>
 
 <div class="container">
-	<a class="btn btn-default" href="${pageContext.request.contextPath}/board/insert" role="button">삽입</a>
+	<a class="btn btn-primary" href="${pageContext.request.contextPath}/board/insert" role="button">삽입</a>
 	<table class="table table-striped">
 		<th>
 			<td>email</td>

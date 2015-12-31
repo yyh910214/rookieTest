@@ -1,7 +1,9 @@
 package pretest.board.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * 2015. 12. 28.
@@ -10,6 +12,8 @@ import java.util.Date;
  */
 public class Document {
 	private int idx;
+	@NotNull
+	@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="이메일 검증 실패")
 	private String email;
 	private String password;
 	private String content;

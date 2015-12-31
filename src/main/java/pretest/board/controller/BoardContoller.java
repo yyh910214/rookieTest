@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import pretest.board.model.Document;
 import pretest.board.service.BoardService;
@@ -33,7 +33,6 @@ public class BoardContoller {
 	public String index(Model model)	{
 		List<Document> documentList = boardService.getDocumentList();
 		model.addAttribute("documentList", documentList);
-		System.out.println(documentList.get(documentList.size()-1).getContent());
 		return "boardIndex";
 	}
 	
@@ -44,8 +43,8 @@ public class BoardContoller {
 		return "documentInsert";
 	}
 	
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(int documentId, Model model)	{
+	@RequestMapping(value = "/update/{idx}", method = RequestMethod.GET)
+	public String update(@PathVariable("idx")int documentId, Model model)	{
 		Document document = boardService.getDocument(documentId);
 		model.addAttribute("document", document);
 		return "documentInsert";
